@@ -22,6 +22,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -62,12 +63,20 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->profile()
             ->sidebarCollapsibleOnDesktop()
-            ->plugin(
+
+            ->plugins([
+                FilamentApexChartsPlugin::make(),
                 BreezyCore::make()
                     ->myProfile(hasAvatars: true)
                     ->enableTwoFactorAuthentication()
 
-            )
+            ])
+//            ->plugin(
+//                BreezyCore::make()
+//                    ->myProfile(hasAvatars: true)
+//                    ->enableTwoFactorAuthentication()
+//
+//            )
             ->tenant(model: Account::class, slugAttribute: 'id', ownershipRelationship: 'owner')
             ->tenantRegistration(RegisterAccount::class)
             ->tenantProfile(EditAccountProfile::class)

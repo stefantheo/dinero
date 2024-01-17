@@ -29,6 +29,9 @@ class DebtResource extends Resource
     protected static ?string $model = Debt::class;
 
     protected static ?string $navigationIcon = 'helping-hand';
+    protected static ?string $navigationLabel = 'Datorii';
+    protected static ?string $title = 'Datorii';
+    protected static ?string $pluralModelLabel = 'Datorii';
 
     protected static ?int $navigationSort = 500;
 
@@ -39,34 +42,34 @@ class DebtResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Radio::make('type')
-                            ->label(__('debts.fields.type'))
+                            ->label('Tip')
                             ->options(__('debts.types'))
                             ->inline()
                             ->default(DebtTypeEnum::PAYABLE->value)
                             ->required(),
                         TextInput::make('name')
-                            ->label(__('debts.fields.name'))
+                            ->label('Denumire')
                             ->required()
                             ->maxLength(255)
                             ->columnSpanFull(),
                         TextInput::make('amount')
-                            ->label(__('debts.fields.amount'))
+                            ->label('Suma datorie')
                             ->required()
                             ->numeric()
                             ->default(0.00),
                         Select::make('wallet_id')
-                            ->label(__('debts.fields.wallet'))
+                            ->label('Portofel')
                             ->relationship('wallet', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         DateTimePicker::make('start_at')
-                            ->label(__('debts.fields.start_at'))
+                            ->label('Data inceput')
                             ->default(now()),
                         ColorPicker::make('color')
-                            ->label(__('debts.fields.color')),
+                            ->label('Culoare'),
                         Textarea::make('description')
-                            ->label(__('debts.fields.description'))
+                            ->label('Descriere')
                             ->maxLength(65535)
                             ->columnSpanFull(),
                     ])->columns(),
@@ -78,7 +81,7 @@ class DebtResource extends Resource
         return $table
             ->columns([
                 ColorColumn::make('color')
-                    ->label(__('debts.fields.color')),
+                    ->label('Culoare'),
                 TextColumn::make('type')
                     ->badge()
                     ->color(function (string $state) {
@@ -88,41 +91,41 @@ class DebtResource extends Resource
                         };
                     })
                     ->formatStateUsing(fn(string $state) => __('debts.types.' . $state))
-                    ->label(__('debts.fields.type'))
+                    ->label('Tip')
                     ->sortable(),
                 TextColumn::make('name')
-                    ->label(__('debts.fields.name'))
+                    ->label('Denumire')
                     ->searchable(),
                 TextColumn::make('total_debt_amount')
-                    ->label(__('debts.fields.total_debt_amount'))
+                    ->label('Suma datorie')
                     ->numeric()
                     ->sortable(),
                 BadgeableColumn::make('balance')
-                    ->label(__('goals.fields.balance'))
+                    ->label('Balanta')
                     ->suffixBadges([
                         Badge::make('progress')
                             ->label(fn(Model $record) => $record->progress. '%')
                     ]),
                 TextColumn::make('wallet.name')
-                    ->label(__('debts.fields.initial_wallet'))
+                    ->label('Portofel')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('start_at')
-                    ->label(__('debts.fields.start_at'))
+                    ->label('Data inceput')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('description')
                     ->limit(20)
                     ->searchable()
-                    ->label(__('debts.fields.description')),
+                    ->label('Descriere'),
             ])
             ->filters([
 
             ])
             ->actions([
                 Action::make('deposit')
-                    ->label(__('debts.actions.debt_transaction'))
+                    ->label('Adauga plata')
                     ->color('danger')
                     ->icon('lucide-trending-up')
                     ->form(function(Debt $debt){
@@ -143,14 +146,14 @@ class DebtResource extends Resource
                 Tables\Actions\CreateAction::make()->slideOver(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             TransactionsRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -158,5 +161,5 @@ class DebtResource extends Resource
 //            'create' => Pages\CreateDebt::route('/create'),
 //            'edit' => Pages\EditDebt::route('/{record}/edit'),
         ];
-    }    
+    }
 }

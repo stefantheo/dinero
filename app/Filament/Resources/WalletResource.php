@@ -27,6 +27,9 @@ class WalletResource extends Resource
     protected static ?string $model = Wallet::class;
 
     protected static ?string $navigationIcon = 'lucide-wallet';
+    protected static ?string $navigationLabel = 'Portofele';
+    protected static ?string $title = 'Portofel';
+    protected static ?string $pluralModelLabel = 'Portofele';
 
     protected static ?int $navigationSort = 100;
 
@@ -37,14 +40,14 @@ class WalletResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('wallets.fields.name'))
+                            ->label('Denumire')
                             ->required()
                             ->autofocus()
                             ->columnSpan([
                                 'sm' => 1,
                             ]),
                         Select::make('type')
-                            ->label(__('wallets.fields.type'))
+                            ->label('Tip')
                             ->columnSpan([
                                 'sm' => 1,
                             ])
@@ -63,7 +66,7 @@ class WalletResource extends Resource
                             ->disabled()
                             ->visible(fn (Get $get, string $operation): bool => $get('type') == WalletTypeEnum::GENERAL->value && $operation !== 'create'),
                         TextInput::make('meta.initial_balance')
-                            ->label(__('wallets.fields.initial_balance'))
+                            ->label('Sold initial')
                             ->required()
                             ->numeric()
                             ->columnSpan([
@@ -73,7 +76,7 @@ class WalletResource extends Resource
                             ->default(0)
                             ->visible(fn (Get $get, string $operation): bool => $get('type') == WalletTypeEnum::GENERAL->value && $operation == 'create'),
                         TextInput::make('meta.credit')
-                            ->label(__('wallets.fields.credit_limit'))
+                            ->label('Credit')
                             ->required()
                             ->numeric()
                             ->inputMode('decimal')
@@ -81,14 +84,14 @@ class WalletResource extends Resource
                             ->columnSpan(fn(string $operation): int => $operation == 'create' ? 1 : 2)
                             ->visible(fn (Get $get): bool => $get('type') == WalletTypeEnum::CREDIT_CARD->value),
                         TextInput::make('meta.total_due')
-                            ->label(__('wallets.fields.total_due'))
+                            ->label('Total de plată')
                             ->required()
                             ->numeric()
                             ->inputMode('decimal')
                             ->default(0)
                             ->visible(fn (Get $get, string $operation): bool => $get('type') == WalletTypeEnum::CREDIT_CARD->value && $operation == 'create'),
                         Select::make('currency_code')
-                            ->label(__('wallets.fields.currency_code'))
+                            ->label('Moneda')
                             ->required()
                             ->searchable()
                             ->columnSpan([
@@ -97,14 +100,14 @@ class WalletResource extends Resource
                             ->options(country_with_currency_and_symbol())
                             ->default('BDT'),
                         ColorPicker::make('color')
-                            ->label(__('wallets.fields.color'))
+                            ->label('Culoare')
                             ->required()
                             ->columnSpan([
                                 'sm' => 1,
                             ])
                             ->default('#22b3e0'),
                         IconPicker::make('icon')
-                            ->label(__('wallets.fields.icon'))
+                            ->label('Icon')
                             ->columnSpan([
                                 'sm' => 2,
                             ])
@@ -114,17 +117,17 @@ class WalletResource extends Resource
                                 '2xl' => 5,
                             ]),
                         Select::make('statement_day_of_month')
-                            ->label(__('wallets.fields.statement_day_of_month'))
+                            ->label('Ziua extrasului')
                             ->options(month_ordinal_numbers())
                             ->required()
                             ->visible(fn (Get $get): bool => $get('type') === WalletTypeEnum::CREDIT_CARD->value),
                         Select::make('payment_due_day_of_month')
-                            ->label(__('wallets.fields.payment_due_day_of_month'))
+                            ->label('Ziua scadentă')
                             ->options(month_ordinal_numbers())
                             ->required()
                             ->visible(fn (Get $get): bool => $get('type') === WalletTypeEnum::CREDIT_CARD->value),
                         Forms\Components\Toggle::make('exclude')
-                            ->label(__('wallets.fields.exclude.title'))
+                            ->label('Exclude din total')
                             ->helperText(__('wallets.fields.exclude.help_text'))
                             ->default(false)
                             ->visible(fn (Get $get): bool => $get('type') === WalletTypeEnum::GENERAL->value),
@@ -195,14 +198,14 @@ class WalletResource extends Resource
                 Tables\Actions\CreateAction::make()->slideOver(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             RelationManagers\TransactionsRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [

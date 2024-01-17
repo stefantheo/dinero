@@ -27,6 +27,9 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'lucide-layout-list';
+    protected static ?string $navigationLabel = 'Categorii';
+    protected static ?string $title = 'Categorii';
+    protected static ?string $pluralModelLabel = 'Categorii';
 
     protected static ?int $navigationSort = 200;
 
@@ -38,7 +41,7 @@ class CategoryResource extends Resource
                     ->columns(2)
                     ->schema([
                         Radio::make('type')
-                            ->label(__('categories.fields.type'))
+                            ->label('Tip')
                             ->columnSpan([
                                 'sm' => 2,
                             ])
@@ -47,14 +50,14 @@ class CategoryResource extends Resource
                             ->default(SpendTypeEnum::EXPENSE->value)
                             ->required(),
                         TextInput::make('name')
-                            ->label(__('categories.fields.name'))
+                            ->label('Denumire')
                             ->required()
                             ->maxLength(255),
                         ColorPicker::make('color')
-                            ->label(__('categories.fields.color'))
+                            ->label('Culoare')
                             ->default('#22b3e0'),
                         IconPicker::make('icon')
-                            ->label(__('categories.fields.icon'))
+                            ->label('Icon')
 //                            ->sets(['lucide-icons'])
                             ->sets(['heroicons', 'fontawesome-solid'])
                             ->columnSpan([
@@ -67,7 +70,7 @@ class CategoryResource extends Resource
                                 '2xl' => 5,
                             ]),
                         Toggle::make('status')
-                            ->label(__('categories.fields.is_visible'))
+                            ->label('Vizibilitate')
                             ->default(VisibilityStatusEnum::ACTIVE->value)
                             ->helperText(__('categories.fields.is_visible_help_text'))
                             ->afterStateHydrated(function (Toggle $component, string $state) {
@@ -83,13 +86,13 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 IconColorColumn::make('icon')
-                    ->label(__('categories.fields.icon')),
+                    ->label('Icon'),
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('categories.fields.name'))
+                    ->label('Denumire')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('categories.fields.type'))
+                    ->label('Tip')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         SpendTypeEnum::EXPENSE->value => 'warning',
@@ -98,9 +101,9 @@ class CategoryResource extends Resource
                     ->formatStateUsing(fn (string $state): string => __("categories.types.{$state}.label"))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('monthly_balance')
-                    ->label(__('categories.fields.monthly_balance')),
+                    ->label('Buget lunar'),
                 Tables\Columns\IconColumn::make('status')
-                    ->label(__('categories.fields.is_visible'))
+                    ->label('Vizibilitate')
                     ->icon(fn (string $state): string => match ($state) {
                         VisibilityStatusEnum::ACTIVE->value => 'lucide-check-circle',
                         VisibilityStatusEnum::INACTIVE->value => 'lucide-x-circle',
@@ -146,14 +149,14 @@ class CategoryResource extends Resource
                 Tables\Actions\CreateAction::make()->slideOver(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             TransactionsRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -161,8 +164,8 @@ class CategoryResource extends Resource
 //            'create' => Pages\CreateCategory::route('/create'),
 //            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
-    }    
-    
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

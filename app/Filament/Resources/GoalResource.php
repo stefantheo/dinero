@@ -30,6 +30,9 @@ class GoalResource extends Resource
     protected static ?string $model = Goal::class;
 
     protected static ?string $navigationIcon = 'goal';
+    protected static ?string $navigationLabel = 'Obiective';
+    protected static ?string $title = 'Obiective';
+    protected static ?string $pluralModelLabel = 'Obiective';
 
     protected static ?int $navigationSort = 400;
 
@@ -40,27 +43,27 @@ class GoalResource extends Resource
                 Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('goals.fields.name'))
+                            ->label('Denumire')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan([
                                 'sm' => 2,
                             ]),
                         TextInput::make('amount')
-                            ->label(__('goals.fields.target_amount'))
+                            ->label('Suma obiectiv')
                             ->required()
                             ->numeric()
                             ->default(0.00),
                         DateTimePicker::make('target_date')
-                            ->label(__('goals.fields.target_date'))
+                            ->label('Data obiectiv')
                             ->required()
                             ->default(now()->addMonth()),
                         Select::make('currency_code')
-                            ->label(__('goals.fields.currency_code'))
+                            ->label('Moneda')
                             ->options(country_with_currency_and_symbol())
                             ->default('BDT'),
                         ColorPicker::make('color')
-                            ->label(__('goals.fields.color'))
+                            ->label('Culoare')
                             ->default('#22b3e0'),
                     ])->columns(),
 
@@ -72,34 +75,34 @@ class GoalResource extends Resource
         return $table
             ->columns([
                 ColorColumn::make('color')
-                    ->label(__('goals.fields.color'))
+                    ->label('Culoare')
                     ->searchable(),
                 TextColumn::make('name')
-                    ->label(__('goals.fields.name'))
+                    ->label('Denumire')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('amount')
-                    ->label(__('goals.fields.target_amount'))
+                    ->label('Suma obiectiv')
                     ->numeric()
                     ->sortable(),
                 BadgeableColumn::make('balance')
-                    ->label(__('goals.fields.balance'))
+                    ->label('Progres')
                     ->suffixBadges([
                         Badge::make('progress')
                             ->label(fn(Model $record) => $record->progress. '%')
                     ]),
                 TextColumn::make('target_date')
-                    ->label(__('goals.fields.target_date'))
+                    ->label('Data obiectiv')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('currency_code')
-                    ->label(__('goals.fields.currency_code'))
+                    ->label('Moneda')
                     ->formatStateUsing(fn (string $state): string => country_with_currency_and_symbol($state))
                     ->searchable(),
             ])
             ->filters([
                 Filter::make('target_date')
-                    ->label(__('goals.fields.target_date'))
+                    ->label('Data obiectiv')
                     ->form([
                         DatePicker::make('target_from')->label(__('goals.fields.target_from')),
                         DatePicker::make('target_until')->label(__('goals.fields.target_until')),
@@ -119,7 +122,7 @@ class GoalResource extends Resource
             ->defaultSort('target_date')
             ->actions([
                 Action::make('deposit')
-                    ->label(__('goals.actions.deposit'))
+                    ->label('Adauga plata')
                     ->icon('lucide-trending-up')
                     ->color('danger')
                     ->form(function(Goal $goal){
@@ -129,7 +132,7 @@ class GoalResource extends Resource
                         (new Pages\ListGoals())->makeGoalTransaction($data);
                     }),
                 Action::make('withdraw')
-                    ->label(__('goals.actions.withdraw'))
+                    ->label('Retrage plata')
                     ->icon('lucide-trending-down')
                     ->color('warning')
                     ->form(function(Goal $goal){
@@ -152,14 +155,14 @@ class GoalResource extends Resource
                 Tables\Actions\CreateAction::make()->slideOver(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             TransactionsRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -167,5 +170,5 @@ class GoalResource extends Resource
 //            'create' => Pages\CreateGoal::route('/create'),
 //            'edit' => Pages\EditGoal::route('/{record}/edit'),
         ];
-    }    
+    }
 }

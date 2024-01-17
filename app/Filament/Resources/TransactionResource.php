@@ -32,6 +32,9 @@ class TransactionResource extends Resource
     protected static ?string $model = Transaction::class;
 
     protected static ?string $navigationIcon = 'receipt';
+    protected static ?string $navigationLabel = 'Tranzacții';
+    protected static ?string $title = 'Tranzacții';
+    protected static ?string $pluralModelLabel = 'Tranzacții';
 
     protected static ?int $navigationSort = 600;
 
@@ -64,14 +67,14 @@ class TransactionResource extends Resource
                                 }
                                 return false;
                             })
-                            ->label(__('transactions.fields.type'))
+                            ->label('Tip')
                             ->inline()
                             ->required()
                             ->live()
                             ->columnSpan(2)
                             ->options(collect(__('transactions.types'))->pluck('label', 'id')),
                         DateTimePicker::make('happened_at')
-                            ->label(__('transactions.fields.happened_at'))
+                            ->label('Data tranzacției')
                             ->native(false)
                             ->required()
                             ->seconds(false)
@@ -79,7 +82,7 @@ class TransactionResource extends Resource
                             ->default(now())
                             ->columnSpan(2),
                         TextInput::make('amount')
-                            ->label(__('transactions.fields.amount'))
+                            ->label('Suma tranzacției')
                             ->required()
                             ->disabled(function(?Model $record){
                                 if(!blank($record)) {
@@ -99,10 +102,10 @@ class TransactionResource extends Resource
                             ->columnSpan(2)
                             ->numeric(),
                         Textarea::make('description')
-                            ->label(__('transactions.fields.description'))
+                            ->label('Descriere')
                             ->columnSpan(2),
                         Select::make('wallet_id')
-                            ->label(__('transactions.fields.wallet'))
+                            ->label('Portofel')
                             ->relationship('wallet', 'name')
                             ->searchable()
                             ->preload()
@@ -127,7 +130,7 @@ class TransactionResource extends Resource
                                 return in_array($get('type'), [TransactionTypeEnum::DEPOSIT->value, TransactionTypeEnum::WITHDRAW->value]);
                             }),
                         Select::make('category_id')
-                            ->label(__('transactions.fields.category'))
+                            ->label('Categorie')
                             ->columnSpan(2)
                             ->relationship('category', 'name', function(Builder $query, Get $get){
                                 $spendType = match ($get('type')) {
@@ -147,7 +150,7 @@ class TransactionResource extends Resource
                                 return in_array($get('type'), [TransactionTypeEnum::DEPOSIT->value, TransactionTypeEnum::WITHDRAW->value]);
                             }),
                         Select::make('from_wallet_id')
-                            ->label( __('transactions.fields.from_wallet'))
+                            ->label('Din portofel')
                             ->relationship('wallet', 'name', function(Builder $query, Get $get){
                                 if($get('type') == TransactionTypeEnum::PAYMENT->value) {
                                     $query = $query->where('type', WalletTypeEnum::GENERAL->value);
@@ -173,7 +176,7 @@ class TransactionResource extends Resource
                                 return in_array($get('type'), [TransactionTypeEnum::TRANSFER->value, TransactionTypeEnum::PAYMENT->value]);
                             }),
                         Select::make('to_wallet_id')
-                            ->label(__('transactions.fields.to_wallet'))
+                            ->label('Către portofel')
                             ->relationship('wallet', 'name', function(Builder $query, Get $get){
                                 $query = $query->where('id', '!=', $get('from_wallet_id'));
                                 if($get('type') == TransactionTypeEnum::PAYMENT->value) {
@@ -193,7 +196,7 @@ class TransactionResource extends Resource
                                 return in_array($get('type'), [TransactionTypeEnum::TRANSFER->value, TransactionTypeEnum::PAYMENT->value]) && !blank($get('from_wallet_id'));
                             }),
                         Toggle::make('confirmed')
-                            ->label(__('transactions.fields.confirmed'))
+                            ->label('Confirmată')
                             ->default(true)
                             ->visible(fn (Get $get): bool => in_array($get('type'), [TransactionTypeEnum::DEPOSIT->value, TransactionTypeEnum::WITHDRAW->value])),
 
@@ -202,10 +205,10 @@ class TransactionResource extends Resource
                     ->columnSpan(['lg' => 1])
                     ->schema([
                         TextInput::make('meta.memo.note')
-                            ->label(__('transactions.fields.note'))
+                            ->label('Nota')
                             ->columnSpan(2),
                         FileUpload::make('meta.memo.attachment')
-                            ->label(__('transactions.fields.attachment'))
+                            ->label('Atasament')
                             ->columnSpan(2),
                     ]),
             ])->columns([
@@ -218,7 +221,7 @@ class TransactionResource extends Resource
     {
         return [
             Tables\Columns\TextColumn::make('happened_at')
-                ->label(__('transactions.fields.happened_at'))
+                ->label('Data tranzacției')
                 ->dateTime()
                 ->sortable(),
             Tables\Columns\TextColumn::make('type')
@@ -232,27 +235,27 @@ class TransactionResource extends Resource
                     TransactionTypeEnum::DEPOSIT->value => 'warning',
                 })
                 ->formatStateUsing(fn (string $state): string => __("transactions.types.{$state}.label"))
-                ->label(__('transactions.fields.type'))
+                ->label('Tip')
                 ->searchable(),
             Tables\Columns\TextColumn::make('amount_float')
-                ->label(__('transactions.fields.amount'))
+                ->label('Suma tranzacției')
                 ->numeric()
                 ->sortable(),
             Tables\Columns\TextColumn::make('wallet.name')
-                ->label(__('transactions.fields.wallet'))
+                ->label('Portofel')
                 ->weight('bold')
                 ->default('—')
                 ->color(fn(?Model $record): array => Color::hex(optional($record->wallet)->color ?? '#dcdcdc'))
                 ->sortable(),
             Tables\Columns\TextColumn::make('category.name')
-                ->label(__('transactions.fields.category'))
+                ->label('Categorie')
                 ->weight('bold')
                 ->default('—')
                 ->icon(fn(?Model $record): string => optional($record->category)->icon ?? '')
                 ->color(fn(?Model $record): array => Color::hex(optional($record->category)->color ?? '#dcdcdc'))
                 ->sortable(),
             Tables\Columns\IconColumn::make('confirmed')
-                ->label(__('transactions.fields.confirmed'))
+                ->label('Confirmată')
                 ->boolean()
                 ->trueIcon('lucide-check-circle')
                 ->falseIcon('lucide-x-circle'),
@@ -267,7 +270,7 @@ class TransactionResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->options(collect(__('transactions.types'))->except([TransactionTypeEnum::TRANSFER->value])->pluck('label', 'id')->toArray()),
                 Tables\Filters\SelectFilter::make('wallet_id')
-                    ->label(__('transactions.fields.wallet'))
+                    ->label('Portofel')
                     ->relationship('wallet', 'name')
                     ->multiple()
                     ->preload()

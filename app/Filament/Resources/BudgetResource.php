@@ -30,7 +30,9 @@ class BudgetResource extends Resource
     protected static ?string $model = Budget::class;
 
     protected static ?string $navigationIcon = 'lucide-calculator';
-
+    protected static ?string $navigationLabel = 'Buget';
+    protected static ?string $title = 'Buget';
+    protected static ?string $pluralModelLabel = 'Bugete';
     protected static ?int $navigationSort = 300;
 
     public static function form(Form $form): Form
@@ -40,14 +42,14 @@ class BudgetResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('budgets.fields.name'))
+                            ->label('Denumire')
                             ->required()
                             ->maxLength(255),
                         ColorPicker::make('color')
-                            ->label(__('budgets.fields.color'))
+                            ->label('Culoare')
                             ->default('#22b3e0'),
                         TextInput::make('amount')
-                            ->label(__('budgets.fields.amount'))
+                            ->label('Suma buget')
                             ->required()
                             ->numeric()
                             ->default(0.00)
@@ -55,7 +57,7 @@ class BudgetResource extends Resource
                                 'sm' => 2,
                             ]),
                         Select::make('categories')
-                            ->label(__('budgets.fields.categories'))
+                            ->label('Categorii')
                             ->required()
                             ->relationship(
                                 name: 'categories',
@@ -68,12 +70,12 @@ class BudgetResource extends Resource
                             ->columnSpan([
                                 'sm' => 2,
                             ]),
-                        Fieldset::make(__('budgets.fields.recurrence'))
+                        Fieldset::make('Recurență')
                             ->schema([
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Select::make('period')
-                                            ->label(__('budgets.fields.period'))
+                                            ->label('Perioada')
                                             ->options(__('budgets.periods'))
                                             ->required()
                                             ->searchable()
@@ -83,27 +85,27 @@ class BudgetResource extends Resource
                                         'sm' => 2,
                                     ]),
                                 Select::make('day_of_week')
-                                    ->label(__('budgets.fields.day_of_week'))
+                                    ->label('Ziua saptamanii')
                                     ->options(__('utilities.weekdays'))
                                     ->placeholder(collect(__('utilities.weekdays'))->first())
                                     ->searchable()
                                     ->preload()
                                     ->visible(fn (Get $get) => $get('period') === BudgetPeriodEnum::WEEKLY->value),
                                 Select::make('day_of_month')
-                                    ->label(__('budgets.fields.day_of_month'))
+                                    ->label('Ziua lunii')
                                     ->options(month_ordinal_numbers())
                                     ->searchable()
                                     ->preload()
                                     ->placeholder(month_ordinal_numbers()->first())
                                     ->visible(fn (Get $get) => in_array($get('period'), BudgetPeriodEnum::toArrayExcept([BudgetPeriodEnum::WEEKLY->value]))),
                                 Select::make('month_of_quarter')
-                                    ->label(__('budgets.fields.month_of_quarter'))
+                                    ->label('Luna din trimestru')
                                     ->options(__('utilities.quarter_months'))
                                     ->preload()
                                     ->searchable()
                                     ->visible(fn (Get $get) => $get('period') === BudgetPeriodEnum::QUARTERLY->value),
                                 Select::make('month_of_year')
-                                    ->label(__('budgets.fields.month_of_year'))
+                                    ->label('Luna din an')
                                     ->options(__('utilities.months'))
                                     ->preload()
                                     ->searchable()
@@ -111,9 +113,9 @@ class BudgetResource extends Resource
                             ]),
                         Toggle::make('status')
                             ->required()
-                            ->label(__('budgets.fields.enabled'))
+                            ->label('Stare')
                             ->default(VisibilityStatusEnum::ACTIVE->value)
-                            ->helperText(__('budgets.fields.enabled_help_text'))
+                            ->helperText(__('Arata acest buget in panoul de control sau raport'))
                             ->afterStateHydrated(function (Toggle $component, string $state) {
                                 $component->state($state == VisibilityStatusEnum::ACTIVE->value);
                             })
@@ -127,26 +129,26 @@ class BudgetResource extends Resource
         return $table
             ->columns([
                 ColorColumn::make('color')
-                    ->label(__('budgets.fields.color'))
+                    ->label('Culoare')
                     ->searchable(),
                 TextColumn::make('name')
-                    ->label(__('budgets.fields.name'))
+                    ->label('Denumire')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('categories.name')
-                    ->label(__('budgets.fields.categories'))
+                    ->label('Denumire categorie')
                     ->badge(),
                 TextColumn::make('amount')
-                    ->label(__('budgets.fields.actual_amount'))
+                    ->label('Suma buget')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('spend_amount')
-                    ->label(__('budgets.fields.spend_amount'))
+                    ->label('Suma cheltuita')
                     ->numeric()
                     ->sortable()
                     ->color(fn(?Model $record) => $record->spend_amount * -1 > $record->amount ? 'danger' : ''),
                 Tables\Columns\IconColumn::make('status')
-                    ->label(__('budgets.fields.enabled'))
+                    ->label('Stare')
                     ->icon(fn (string $state): string => match ($state) {
                         VisibilityStatusEnum::ACTIVE->value => 'lucide-check-circle',
                         VisibilityStatusEnum::INACTIVE->value => 'lucide-x-circle',
@@ -175,14 +177,14 @@ class BudgetResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -190,8 +192,8 @@ class BudgetResource extends Resource
             'create' => Pages\CreateBudget::route('/create'),
             'edit' => Pages\EditBudget::route('/{record}/edit'),
         ];
-    }    
-    
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
