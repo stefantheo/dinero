@@ -46,13 +46,16 @@ class ListDebts extends ListRecords
     {
         return [
             'all' => Tab::make()
+                ->label('Toate')
                 ->icon('helping-hand')
                 ->badge(Debt::tenant()->count()),
             DebtTypeEnum::PAYABLE->value => Tab::make()
+                ->label(__('debts.types.' . DebtTypeEnum::PAYABLE->value))
                 ->icon('lucide-trending-down')
                 ->badge(Debt::tenant()->where('type', DebtTypeEnum::PAYABLE->value)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', DebtTypeEnum::PAYABLE->value)),
             DebtTypeEnum::RECEIVABLE->value => Tab::make()
+                ->label(__('debts.types.' . DebtTypeEnum::PAYABLE->value))
                 ->icon('lucide-trending-up')
                 ->badge(Debt::tenant()->where('type', DebtTypeEnum::RECEIVABLE->value)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', DebtTypeEnum::RECEIVABLE->value)),

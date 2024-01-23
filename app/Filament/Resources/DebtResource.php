@@ -30,7 +30,10 @@ class DebtResource extends Resource
 
     protected static ?string $navigationIcon = 'helping-hand';
     protected static ?string $navigationLabel = 'Datorii';
+
     protected static ?string $title = 'Datorii';
+    protected static ?string $modelLabel = 'datorie';
+
     protected static ?string $pluralModelLabel = 'Datorii';
 
     protected static ?int $navigationSort = 500;

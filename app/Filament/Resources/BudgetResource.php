@@ -31,7 +31,9 @@ class BudgetResource extends Resource
 
     protected static ?string $navigationIcon = 'lucide-calculator';
     protected static ?string $navigationLabel = 'Buget';
+
     protected static ?string $title = 'Buget';
+    protected static ?string $modelLabel = 'buget';
     protected static ?string $pluralModelLabel = 'Bugete';
     protected static ?int $navigationSort = 300;
 

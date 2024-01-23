@@ -25,13 +25,16 @@ class ListCategories extends ListRecords
     {
         return [
             'all' => Tab::make()
+                ->label('Toate')
                 ->icon('lucide-layout-list')
                 ->badge(Category::tenant()->count()),
             SpendTypeEnum::EXPENSE->value => Tab::make()
+                ->label('Cheltuieli')
                 ->icon('lucide-trending-down')
                 ->badge(Category::tenant()->where('type', SpendTypeEnum::EXPENSE->value)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', SpendTypeEnum::EXPENSE->value)),
             SpendTypeEnum::INCOME->value => Tab::make()
+                ->label('Venituri')
                 ->icon('lucide-trending-up')
                 ->badge(Category::tenant()->where('type', SpendTypeEnum::INCOME->value)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', SpendTypeEnum::INCOME->value)),

@@ -28,7 +28,10 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'lucide-layout-list';
     protected static ?string $navigationLabel = 'Categorii';
+
     protected static ?string $title = 'Categorii';
+    protected static ?string $modelLabel = 'categorie';
+
     protected static ?string $pluralModelLabel = 'Categorii';
 
     protected static ?int $navigationSort = 200;
