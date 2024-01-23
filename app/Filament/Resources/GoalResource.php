@@ -32,6 +32,8 @@ class GoalResource extends Resource
     protected static ?string $navigationIcon = 'goal';
     protected static ?string $navigationLabel = 'Obiective';
     protected static ?string $title = 'Obiective';
+    protected static ?string $modelLabel = 'obiectiv';
+
     protected static ?string $pluralModelLabel = 'Obiective';
 
     protected static ?int $navigationSort = 400;
@@ -61,7 +63,7 @@ class GoalResource extends Resource
                         Select::make('currency_code')
                             ->label('Moneda')
                             ->options(country_with_currency_and_symbol())
-                            ->default('BDT'),
+                            ->default('RON'),
                         ColorPicker::make('color')
                             ->label('Culoare')
                             ->default('#22b3e0'),
