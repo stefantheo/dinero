@@ -17,71 +17,71 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Bills',
+                'name' => 'Intreținere',
                 'type' => SpendTypeEnum::EXPENSE->value,
                 'color' => '#22b3e0',
                 'icon' => 'receipt',
             ],
+//            [
+//                'name' => 'Food',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#224ce0',
+//                'icon' => 'lucide-utensils',
+//            ],
+//            [
+//                'name' => 'Transport',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#e07222',
+//                'icon' => 'lucide-bus',
+//            ],
+//            [
+//                'name' => 'Shopping',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#22a1e0',
+//                'icon' => 'lucide-shirt',
+//            ],
+//            [
+//                'name' => 'Entertainment',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#e02222',
+//                'icon' => 'lucide-gamepad-2',
+//            ],
+//            [
+//                'name' => 'Health',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#22e0b3',
+//                'icon' => 'lucide-stethoscope',
+//            ],
+//            [
+//                'name' => 'Education',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#e0b322',
+//                'icon' => 'lucide-graduation-cap',
+//            ],
+//            [
+//                'name' => 'Gifts',
+//                'type' => SpendTypeEnum::EXPENSE->value,
+//                'color' => '#22e0b3',
+//                'icon' => 'lucide-gift',
+//            ],
             [
-                'name' => 'Food',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#224ce0',
-                'icon' => 'lucide-utensils',
-            ],
-            [
-                'name' => 'Transport',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#e07222',
-                'icon' => 'lucide-bus',
-            ],
-            [
-                'name' => 'Shopping',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#22a1e0',
-                'icon' => 'lucide-shirt',
-            ],
-            [
-                'name' => 'Entertainment',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#e02222',
-                'icon' => 'lucide-gamepad-2',
-            ],
-            [
-                'name' => 'Health',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#22e0b3',
-                'icon' => 'lucide-stethoscope',
-            ],
-            [
-                'name' => 'Education',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#e0b322',
-                'icon' => 'lucide-graduation-cap',
-            ],
-            [
-                'name' => 'Gifts',
-                'type' => SpendTypeEnum::EXPENSE->value,
-                'color' => '#22e0b3',
-                'icon' => 'lucide-gift',
-            ],
-            [
-                'name' => 'Salary',
+                'name' => 'Fond',
                 'type' => SpendTypeEnum::INCOME->value,
                 'color' => '#e0b322',
                 'icon' => 'lucide-banknote',
             ],
-            [
-                'name' => 'Business',
-                'type' => SpendTypeEnum::INCOME->value,
-                'color' => '#2279e0',
-                'icon' => 'lucide-building-2',
-            ],
-            [
-                'name' => 'Extra Income',
-                'type' => SpendTypeEnum::INCOME->value,
-                'color' => '#e0b322',
-                'icon' => 'lucide-coins',
-            ],
+//            [
+//                'name' => 'Business',
+//                'type' => SpendTypeEnum::INCOME->value,
+//                'color' => '#2279e0',
+//                'icon' => 'lucide-building-2',
+//            ],
+//            [
+//                'name' => 'Extra Income',
+//                'type' => SpendTypeEnum::INCOME->value,
+//                'color' => '#e0b322',
+//                'icon' => 'lucide-coins',
+//            ],
         ];
 
         $accounts = Account::all();

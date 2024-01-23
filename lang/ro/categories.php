@@ -3,17 +3,17 @@
 use App\Enums\SpendTypeEnum;
 
 return [
-    'title' => 'Categories',
-    'title_singular' => 'Category',
+    'title' => 'Categorii',
+    'title_singular' => 'Categoria',
     'fields' => [
-        'name' => 'Name',
-        'type' => 'Type',
+        'name' => 'Nume',
+        'type' => 'Tip',
         'icon' => 'Icon',
-        'color' => 'Color',
-        'monthly_balance' => 'Monthly Balance',
+        'color' => 'Culoare',
+        'monthly_balance' => 'Buget lunar',
         'total' => 'Total',
-        'is_visible' => 'Is Visible?',
-        'is_visible_help_text' => 'Ignore this category on the total balance and not showing on the transaction list',
+        'is_visible' => 'Este vizibil?',
+        'is_visible_help_text' => 'Ignoră această categorie la soldul total și nu o afișa în lista de tranzacții',
     ],
     'types' => [
         SpendTypeEnum::INCOME->value   => [
