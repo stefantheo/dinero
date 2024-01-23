@@ -20,27 +20,15 @@ class WalletSeeder extends Seeder
             [
                 'name' => 'Cash',
                 'type' => WalletTypeEnum::GENERAL->value,
-                'currency_code' => 'BDT',
+                'currency_code' => 'RON',
                 'color' => '#22b3e0',
             ],
             [
                 'name' => 'Bank',
                 'type' => WalletTypeEnum::GENERAL->value,
-                'currency_code' => 'BDT',
+                'currency_code' => 'RON',
                 'color' => '#224ce0'
             ],
-            [
-                'name' => 'Mobile Wallet',
-                'type' => WalletTypeEnum::GENERAL->value,
-                'currency_code' => 'BDT',
-                'color' => '#e07222'
-            ],
-            [
-                'name' => 'Credit Card',
-                'type' => WalletTypeEnum::CREDIT_CARD->value,
-                'currency_code' => 'BDT',
-                'color' => '#22a1e0'
-            ]
         ];
 
         $accounts = Account::all();

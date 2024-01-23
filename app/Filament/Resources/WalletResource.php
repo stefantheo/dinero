@@ -98,7 +98,7 @@ class WalletResource extends Resource
                                 'sm' => 1,
                             ])
                             ->options(country_with_currency_and_symbol())
-                            ->default('BDT'),
+                            ->default('RON'),
                         ColorPicker::make('color')
                             ->label('Culoare')
                             ->required()
