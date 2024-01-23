@@ -32,6 +32,6 @@ return [
     ],
     'types' => [
         WalletTypeEnum::GENERAL->value => 'General',
-        WalletTypeEnum::CREDIT_CARD->value => 'Credit Card',
+        WalletTypeEnum::CREDIT_CARD->value => 'Card de credit',
     ]
 ];

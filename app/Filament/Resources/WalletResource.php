@@ -28,7 +28,9 @@ class WalletResource extends Resource
 
     protected static ?string $navigationIcon = 'lucide-wallet';
     protected static ?string $navigationLabel = 'Portofele';
+
     protected static ?string $title = 'Portofel';
+    protected static ?string $modelLabel = 'portofel';
     protected static ?string $pluralModelLabel = 'Portofele';
 
     protected static ?int $navigationSort = 100;
