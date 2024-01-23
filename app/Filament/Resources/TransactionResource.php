@@ -23,6 +23,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
+use http\QueryString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -33,7 +34,10 @@ class TransactionResource extends Resource
 
     protected static ?string $navigationIcon = 'receipt';
     protected static ?string $navigationLabel = 'Tranzacții';
+
     protected static ?string $title = 'Tranzacții';
+    protected static ?string $modelLabel = 'tranzactie';
+
     protected static ?string $pluralModelLabel = 'Tranzacții';
 
     protected static ?int $navigationSort = 600;
@@ -141,9 +145,16 @@ class TransactionResource extends Resource
                                 if(!is_null($spendType)) {
                                     return $query->tenant()->where('type', $spendType);
                                 }
-
                                 return $query;
                             })
+                            ->default (function () {
+                                $category = Transaction::query()
+                                    ->where('type', TransactionTypeEnum::WITHDRAW->value)
+                                    ->first('category_id');
+                                return $category?->category_id;
+                            })
+                            ->searchDebounce(500)
+                            ->selectablePlaceholder(false)
                             ->searchable()
                             ->preload()
                             ->visible(function (Get $get): bool {

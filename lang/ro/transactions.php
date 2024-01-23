@@ -24,23 +24,23 @@ return [
     'types' => [
         TransactionTypeEnum::DEPOSIT->value   => [
             'id' => TransactionTypeEnum::DEPOSIT->value,
-            'label' => 'Deposit',
-            'description' => 'Deposit to your wallet',
+            'label' => 'Depozit',
+            'description' => 'Depoziteaza in portofel',
         ],
         TransactionTypeEnum::WITHDRAW->value  => [
             'id' => TransactionTypeEnum::WITHDRAW->value,
-            'label' => 'Withdraw',
-            'description' => 'Withdraw from your wallet',
+            'label' => 'Retragere',
+            'description' => 'Retrage din portofel',
         ],
         TransactionTypeEnum::TRANSFER->value  => [
             'id' => TransactionTypeEnum::TRANSFER->value,
             'label' => 'Transfer',
-            'description' => 'Transfer between your wallets',
+            'description' => 'Transfera dintr-un portofel in altul',
         ],
         TransactionTypeEnum::PAYMENT->value  => [
             'id' => TransactionTypeEnum::PAYMENT->value,
-            'label' => 'Payment',
-            'description' => 'Payment to one wallet to another wallet',
+            'label' => 'Plata',
+            'description' => 'Plata dintr-un portofel in altul',
         ],
     ]
 ];
