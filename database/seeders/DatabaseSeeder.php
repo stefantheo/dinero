@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             TransactionSeeder::class,
             GoalSeeder::class,
             DebtSeeder::class,
+            ApartmentSeeder::class,
         ]);
     }
 }

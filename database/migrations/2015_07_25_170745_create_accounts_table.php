@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->ulid('id')->index()->primary();
-            $table->string('name')->unique()->index();
+            $table->string('name')
+                ->unique()
+                ->index();
             $table->foreignIdFor(User::class, 'owner_id')->constrained((new User())->getTable())->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
